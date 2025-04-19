@@ -28,6 +28,7 @@ type GroupMetadata struct {
 	AllowedFeatures                    []string          `json:"allowed_features"`           // Allowed features
 	AlternateAccountNotificationExpiry time.Time         `json:"alt_notification_threshold"` // Show alternate notifications newer than this time.
 	EnableEnforcementCountInNames      bool              `json:"enable_enforcement_count_in_names"`
+	EnforcersHaveGameAdminTags         bool              `json:"moderators_have_gameadmin_tags"` // WARNING: Potentially buggy.
 }
 
 func NewGuildGroupMetadata(guildID string) *GroupMetadata {

@@ -416,6 +416,18 @@ func (p *EvrPipeline) lobbyAuthorize(ctx context.Context, logger *zap.Logger, se
 		profile.DeveloperFeatures = &evr.DeveloperFeatures{}
 	}
 
+	if gg.IsEnforcer(userID) && gg.GroupMetadata.EnforcersHaveGameAdminTags {
+		if _, ok := profile.UnlockedCosmetics["arena"]; !ok {
+			profile.UnlockedCosmetics["arena"] = make(map[string]bool)
+		}
+		profile.UnlockedCosmetics["arena"]["rwd_tag_0011"] = true
+	} else {
+		if _, ok := profile.UnlockedCosmetics["arena"]; !ok {
+			profile.UnlockedCosmetics["arena"] = make(map[string]bool)
+		}
+		profile.UnlockedCosmetics["arena"]["rwd_tag_0011"] = false
+	}
+
 	if _, err := p.profileCache.Store(session.ID(), *profile); err != nil {
 		return fmt.Errorf("failed to cache profile: %w", err)
 	}
